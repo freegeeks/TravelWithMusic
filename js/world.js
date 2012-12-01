@@ -1,4 +1,3 @@
-var Config = {};
 Config.world = {
 	rectFill: '0-#9bb7cb-#adc8da'
 };

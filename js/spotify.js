@@ -54,6 +54,15 @@ require(['$api/models', '$views/image#Image'], function(models, Image) {
 	// Update the DOM when the song changes
 	models.player.addEventListener('change', updateCurrentTrack);
 
+	// Playlist
+	var promise = models.Playlist.createTemporary('Travel with Music Playlist');
+	promise.done(function(playlist) {
+		playlist._collections();
+		playlist.tracks.add(models.Track.fromURI('spotify:track:0blzOIMnSXUKDsVSHpZtWL'));
+
+		models.player.playContext(playlist);
+	});
+
 	// Play a single track
 	var image = Image.forTrack(models.Track.fromURI('spotify:track:0blzOIMnSXUKDsVSHpZtWL'), {player:true});
 
