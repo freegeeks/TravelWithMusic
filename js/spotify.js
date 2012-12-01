@@ -23,3 +23,43 @@ require(['$api/models'], function(models) {
 	);
 	console.debug(user);
 });
+
+require(['$api/models', '$views/image#Image'], function(models, Image) {
+	var currentTrackDiv = $('<div />');
+	$('body').append(currentTrackDiv);
+
+	function updateCurrentTrack(){
+		if (models.player.track == null) {
+			currentTrackDiv.html('No track currently playing');
+		} else {
+			var artists = models.player.track.artists;
+			var artists_array = [];
+			for (i=0;i<artists.length;i++) {
+				artists_array.push(artists[i].name);
+			}
+
+			var html = '<p>'
+				+ '<img src="' + models.player.track.image + '" style="align:left;" />'
+				+ 'Now playing: ' + artists_array.join(', ') + '<br />'
+				+ ' - ' + models.player.track.name;
+				+ '</p>';
+
+			currentTrackDiv.html(html);
+		}
+	}
+
+	// Keep track of current song
+	models.player.load('track').done(updateCurrentTrack);
+
+	// Update the DOM when the song changes
+	models.player.addEventListener('change', updateCurrentTrack);
+
+	// Play a single track
+	var image = Image.forTrack(models.Track.fromURI('spotify:track:0blzOIMnSXUKDsVSHpZtWL'), {player:true});
+
+	// Pass the player HTML code to the #single-track-player div
+	var container = $('<div />');
+	container.append(image.node);
+
+	$('body').append(container);
+});
