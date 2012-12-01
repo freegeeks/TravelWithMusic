@@ -57,29 +57,4 @@ Raphael(10, 10, 1000, 400, function () {
 			r.circle().attr({fill: "none", stroke: "#f00", r: 5}).attr(world.getXY(pos.coords.latitude, pos.coords.longitude));
 		});
 	} catch (e) {}
-	var frm = document.getElementById("latlon-form"),
-		dot = r.circle().attr({fill: "r#FE7727:50-#F57124:100", stroke: "#fff", "stroke-width": 2, r: 0}),
-		// dot2 = r.circle().attr({stroke: "#000", r: 0}),
-		ll = document.getElementById("latlon"),
-		cities = document.getElementById("cities");
-	frm.onsubmit = function () {
-		var attr = world.parseLatLon(ll.value);
-		attr.r = 0;
-		dot.stop().attr(attr).animate({r: 5}, 1000, "elastic");
-		// dot2.stop().attr(attr).animate({r: 10}, 1000, "elastic");
-		return false;
-	};
-	cities.onclick = function (e) {
-		e = e || window.event;
-		var target = e.target || e.srcElement || document;
-		if (target.tagName == "A") {
-			var txt = decodeURIComponent(target.href.substring(target.href.indexOf("#") + 1)),
-				attr = world.parseLatLon(txt);
-			ll.value = txt;
-			attr.r = 0;
-			dot.stop().attr(attr).animate({r: 5}, 1000, "elastic");
-			// dot2.stop().attr(attr).animate({r: 10}, 1000, "elastic");
-			return false;
-		}
-	};
 });
