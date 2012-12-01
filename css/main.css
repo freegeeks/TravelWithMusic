@@ -102,4 +102,11 @@ button {width: auto; overflow: visible;}
 
 /* let's clear some floats */
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.clearfix:after { clear: both; } 
+.clearfix:after { clear: both; }
+
+
+/* app styles*/
+
+body {background:#333;}
+header {width:100%;height:120px;float:left;display:block;}
+p {font-size:5em;}
