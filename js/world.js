@@ -52,9 +52,10 @@ Raphael(10, 10, 1000, 400, function () {
 		return this.getXY(lat, lon);
 	};
 
-	try {
-		navigator.geolocation && navigator.geolocation.getCurrentPosition(function (pos) {
-			r.circle().attr({fill: "none", stroke: "#f00", r: 5}).attr(world.getXY(pos.coords.latitude, pos.coords.longitude));
+	require(['$api/location'], function($location) {
+		var geoPosition = $location.Location.query();
+		geoPosition.load(['latitude', 'longitude']).done(function(geoPosition) {
+			r.circle().attr({fill: "none", stroke: "#f00", r: 5}).attr(world.getXY(geoPosition.latitude, geoPosition.longitude));
 		});
-	} catch (e) {}
+	});
 });
