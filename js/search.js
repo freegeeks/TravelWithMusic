@@ -77,6 +77,22 @@ Search.prototype.songs = function (options, callback) {
 
 // Search for songs based on the full config
 Search.prototype.load = function(options, callback) {
+    var total = options.locations.length,
+        count = 0,
+        results = [];
+
+    for (var i in options.locations) {
+        this.loadByLocation(options, options.locations[i], function(data) {
+            results = results.concat(data);
+
+            if (++count == total) {
+                callback(results);
+            }
+        });
+    }
+};
+
+Search.prototype.loadByLocation = function(options, location, callback) {
     var results = [];
     var that = this;
     
@@ -92,33 +108,26 @@ Search.prototype.load = function(options, callback) {
 
     var moods           = [ 'happy', 'angry', 'sad', 'relaxing', 'excited' ];
 
-    // search by location in the map
-    if (options.locations) {
-        // TODO Make work with multiple locations
-        for (var i in options.locations) {
-            var loc     = options.locations[i];
-            this.artists({
-                artist_location: loc.name,
-                mood: loc.mood
+    this.artists({
+        artist_location: location.name,
+        mood: location.mood
+    }, function (data) {
+        var loop    = data.length;
+        var k       = 1;
+        for (var j in data) {
+            that.songs({
+                artist_id: data[j].id,
+                mood: location.mood,
+                dance: location.dance,
+                results: location.frequency
             }, function (data) {
-                var loop    = data.length;
-                var k       = 1;
-                for (var j in data) {
-                    that.songs({
-                        artist_id: data[j].id,
-                        mood: loc.mood,
-                        dance: loc.dance,
-                        results: loc.frequency
-                    }, function (data) {
-                        results = results.concat(data);
-                        if (k++ == loop) {
-                            callback(results);
-                        }
-                    });
+                results = results.concat(data);
+                if (k++ == loop) {
+                    callback(results);
                 }
             });
         }
-    }
+    });
 };
 
 Search.prototype.locationByGeo = function(latitude, longitude, callback) {
@@ -152,6 +161,7 @@ var search = new Search();
 search.locationByGeo(52.37, 4.89, function(location) {
 
     search.weatherByLocation(location, function(weather) {
+        var mood = 'happy';
         if (weather.text == 'Partly Cloudy') {
             mood = 'sad';
         }
@@ -163,6 +173,10 @@ search.locationByGeo(52.37, 4.89, function(location) {
                     dance: 0,
                     frequency: 4,
                     mood: mood
+                },
+                {
+                    name: 'italy',
+                    mood: 'happy'
                 }
             ]
         }, function(data) {

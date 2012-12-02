@@ -48,11 +48,11 @@ App.prototype._search = function(latitude, longitude, callback) {
                         dance: 0,
                         frequency: 4,
                         mood: 'happy'
+                    },
+                    {
+                        name: 'italy',
+                        mood: 'happy'
                     }
-                    // {
-                    //     name: 'italy',
-                    //     mood: 'happy'
-                    // }
                 ]
             }, function(data) {
                 console.log(data);
