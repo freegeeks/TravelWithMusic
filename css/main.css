@@ -152,43 +152,51 @@ nav ul li a.active, nav a:hover {background:url(../img/thematic-icons-over.png) 
 
 .pin {width:241px;height:241px;background:url(../img/pin-over.png) no-repeat;top:85px;left:350px;position:relative;z-index:1;}
 
+.pin-over {
+	position: absolute;
+}
 .pin-over-inner {
-	position: relative;
 	border-radius: 50%;
 	width:50px;
 	height:50px;
 	background:#FFF;
 }
 
-.pin-over-weather .pin-over-inner {
-	top: 45px;
+.pin-over.pin-over-weather {
+	top: 90px;
 	left: 35px;
+}
+.pin-over.pin-over-weather .pin-over-inner {
 	background:url(../img/weather-sprites.png);
 	background-position: 2px -61px;
 }
-.pin-over-weather .pin-over-inner.opt-2 { background-position: -56px -61px; }
-.pin-over-weather .pin-over-inner.opt-3 { background-position: -110px -61px; }
-.pin-over-weather .pin-over-inner.opt-4 { background-position: -163px -61px; }
+.pin-over.pin-over-weather .pin-over-inner.opt-2 { background-position: -56px -61px; }
+.pin-over.pin-over-weather .pin-over-inner.opt-3 { background-position: -110px -61px; }
+.pin-over.pin-over-weather .pin-over-inner.opt-4 { background-position: -163px -61px; }
 
-.pin-over-dance .pin-over-inner {
-	top: 36px;
-	left: 95px;
+.pin-over.pin-over-dance {
+	top: 30px;
+	left: 96px;
+}
+.pin-over.pin-over-dance .pin-over-inner {
 	background:url(../img/dance-sprites.png);
 	background-position: 2px -61px;
 }
-.pin-over-dance .pin-over-inner.opt-2 { background-position: -52px -61px; }
-.pin-over-dance .pin-over-inner.opt-3 { background-position: -110px -61px; }
-.pin-over-dance .pin-over-inner.opt-4 { background-position: -163px -61px; }
+.pin-over.pin-over-dance .pin-over-inner.opt-2 { background-position: -52px -61px; }
+.pin-over.pin-over-dance .pin-over-inner.opt-3 { background-position: -110px -61px; }
+.pin-over.pin-over-dance .pin-over-inner.opt-4 { background-position: -163px -61px; }
 
-.pin-over-settings .pin-over-inner {
-	top: -4px;
+.pin-over.pin-over-settings {
+	top: 90px;
 	left: 155px;
+}
+.pin-over.pin-over-settings .pin-over-inner {
 	background:url(../img/settings-sprites.png);
 	background-position: 2px -61px;
 }
-.pin-over-settings .pin-over-inner.opt-2 { background-position: -52px -61px; }
-.pin-over-settings .pin-over-inner.opt-3 { background-position: -110px -61px; }
-.pin-over-settings .pin-over-inner.opt-4 { background-position: -163px -61px; }
+.pin-over.pin-over-settings .pin-over-inner.opt-2 { background-position: -52px -61px; }
+.pin-over.pin-over-settings .pin-over-inner.opt-3 { background-position: -110px -61px; }
+.pin-over.pin-over-settings .pin-over-inner.opt-4 { background-position: -163px -61px; }
 
 
 
@@ -205,40 +213,40 @@ nav ul li a.active, nav a:hover {background:url(../img/thematic-icons-over.png) 
 	border-radius: 50%;
 }
 
-.pin-over-weather-big {
+.pin-over-big.pin-over-weather {
 	top: 70px;
 	left: 10px;
 }
-.pin-over-weather-big .pin-over-inner {
+.pin-over-big.pin-over-weather .pin-over-inner {
 	background-image: url(../img/weather-sprites.png);
 	background-position: 8px 6px;
 }
-.pin-over-weather-big .pin-over-inner.opt-2 { background-position: -75px 6px; }
-.pin-over-weather-big .pin-over-inner.opt-3 { background-position: -150px 6px; }
-.pin-over-weather-big .pin-over-inner.opt-4 { background-position: -225px 6px; }
+.pin-over-big.pin-over-weather .pin-over-inner.opt-2 { background-position: -75px 6px; }
+.pin-over-big.pin-over-weather .pin-over-inner.opt-3 { background-position: -150px 6px; }
+.pin-over-big.pin-over-weather .pin-over-inner.opt-4 { background-position: -225px 6px; }
 
-.pin-over-dance-big {
+.pin-over-big.pin-over-dance {
 	top: 10px;
 	left: 70px;
 }
-.pin-over-dance-big .pin-over-inner {
+.pin-over-big.pin-over-dance .pin-over-inner {
 	background-image: url(../img/dance-sprites.png);
 	background-position: 6px 6px;
 }
-.pin-over-dance-big .pin-over-inner.opt-2 { background-position: -75px 6px; }
-.pin-over-dance-big .pin-over-inner.opt-3 { background-position: -150px 6px; }
-.pin-over-dance-big .pin-over-inner.opt-4 { background-position: -225px 6px; }
+.pin-over-big.pin-over-dance .pin-over-inner.opt-2 { background-position: -75px 6px; }
+.pin-over-big.pin-over-dance .pin-over-inner.opt-3 { background-position: -150px 6px; }
+.pin-over-big.pin-over-dance .pin-over-inner.opt-4 { background-position: -225px 6px; }
 
-.pin-over-settings-big {
+.pin-over-big.pin-over-settings {
 	top: 70px;
 	left: 130px;
 }
-.pin-over-settings-big .pin-over-inner {
+.pin-over-big.pin-over-settings .pin-over-inner {
 	background-image: url(../img/settings-sprites.png);
 	background-position: 2px 8px;
 }
-.pin-over-settings-big .pin-over-inner.opt-2 { background-position: -72px 8px; }
-.pin-over-settings-big .pin-over-inner.opt-3 { background-position: -154px 8px; }
-.pin-over-settings-big .pin-over-inner.opt-4 { background-position: -225px 8px; }
+.pin-over-big.pin-over-settings .pin-over-inner.opt-2 { background-position: -72px 8px; }
+.pin-over-big.pin-over-settings .pin-over-inner.opt-3 { background-position: -154px 8px; }
+.pin-over-big.pin-over-settings .pin-over-inner.opt-4 { background-position: -225px 8px; }
 
 
