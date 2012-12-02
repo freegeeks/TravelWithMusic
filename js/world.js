@@ -24,6 +24,16 @@ Raphael(10, 10, 1000, 400, function () {
 	}
 	var world = r.setFinish();
 	world.hover(over, out);
+	world.click(function(event) {
+		var x = event.layerX,
+			y = event.layerY,
+			latLon = world.getLatLon(x, y);
+
+		var search = new Search();
+		search.location(latLon.lat, latLon.lon, function(location) {
+			console.log(location);
+		});
+	});
 	// world.animate({fill: "#666", stroke: "#666"}, 2000);
 	world.getXY = function (lat, lon) {
 		return {
