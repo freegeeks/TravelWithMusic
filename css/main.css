@@ -127,4 +127,4 @@ nav ul li a {width:37px;height:68px;display:block;margin-right:13px;text-indent:
 nav ul li a.active, nav a:hover {background:url(../img/thematic-icons-over.png) no-repeat center top;}
 
 
-#worldMap {float:left;margin-top:200px;}
+#worldMap {float:left;margin:60px 0 0 50px;}
