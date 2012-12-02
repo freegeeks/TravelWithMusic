@@ -10,6 +10,36 @@ var Search = function() {
     // Constructor
 };
 
+Search.prototype.photos = function (options, callback) {
+    var url = 'http://api.flickr.com/services/rest?method=flickr.photos.search';
+
+    var data        = new Object;
+    data.api_key    = '3c4c58b74a18ca8a57454b7646bdfe2c';
+    data.text       = 'Amsterdam';
+    data.format     = 'json';
+    data.nojsoncallback     = 1;
+    data.per_page   = 50;
+    data.geo_context = 2;
+
+    $.ajax({
+        url: url,
+        data: data,
+        success: function(data) {
+            var photos = data.photos.photo;
+            for (var i in photos) {
+                photo = photos[i];
+                var img = new Image();
+                img.src = 'http://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_b.jpg';
+                if (img.width == 1024 && img.height == 768) {
+                    console.debug(img.src);
+                }
+
+            }
+            //callback(img);
+        }
+    });
+}
+
 // Search by artists
 Search.prototype.artists = function (options, callback) {
     var url = 'http://developer.echonest.com/api/v4/artist/search';
@@ -157,6 +187,9 @@ Search.prototype.weatherByLocation = function(location, callback) {
 if (typeof require === 'undefined') {
 
 var search = new Search();
+search.photos([], function () {
+    return true;
+});
 
 search.locationByGeo(52.37, 4.89, function(location) {
 
@@ -182,7 +215,7 @@ search.locationByGeo(52.37, 4.89, function(location) {
         }, function(data) {
             for (var i in data) {
                 if (data[i].tracks.length && data[i].tracks[0].foreign_id) {
-                    console.debug(data[i].tracks[0].foreign_id + ' ' + data[i].artist_name + ' - ' + data[i].title);
+                    //console.debug(data[i].tracks[0].foreign_id + ' ' + data[i].artist_name + ' - ' + data[i].title);
                 }
             }
         });
