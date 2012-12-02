@@ -101,7 +101,7 @@ Search.prototype.songs = function (options, callback) {
     }
     if (options.dance) {
         data.min_danceability = 0;
-        data.max_danceability = 1;
+        data.max_danceability = options.dance;
     }
 
     $.ajax({

@@ -65,6 +65,10 @@ App.prototype.bindDomEvents = function() {
         inner.removeClass('opt-' + current).addClass('opt-' + next);
     });
 
+    $(document).on('dblclick', '.pin', function(event) {
+        $(this).remove();
+    });
+
     // Themes
     $(document).on('click', 'header nav ul li a', function () {
         $(this).toggleClass('active');
@@ -94,7 +98,7 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
             var first = ($('.pin').length === 0);
             var pin = $('<div />');
             pin.addClass('pin');
-            if (first) {
+            if (!first) {
                 pin.addClass('pin-green');
             }
             pin.css('top', y - 30);
@@ -111,21 +115,26 @@ App.prototype.play = function() {
     var self = this;
     var locations = [];
     var mapping = [0, 0, 0.33, 0.66, 1];
+    var mappingFreq = [0, 10, 20, 30, 40];
     $('.pin').each(function() {
         var node = $(this),
             location = $(this).data('location');
 
-        location.mood = (location.mood <= 2) ? 'happy' : 'sad';
-        location.frequency = mapping[location.frequency];
-        location.dance = mapping[location.dance];
+        var other = {
+            mood: (location.mood <= 2) ? 'happy' : 'sad',
+            frequency: mappingFreq[location.frequency],
+            dance: mapping[location.dance],
+            name: location.name
+        };
 
-        locations.push(location);
+        locations.push(other);
     });
 
     var query = {
         themes: this.themes(),
         locations: locations
     };
+    console.log(query);
 
     this.search(query, function(playlist, mapping) {
         self.mapping = mapping;
@@ -178,7 +187,13 @@ App.prototype.search = function(query, callback) {
 
 if (typeof require !== 'undefined') {
     require(['$api/models'], function(models) {
+        var latitude = 52.37,
+            longitude = 4.89,
+            y = latitude * -2.6938 + 227.066,
+            x = longitude * 2.6938 + 465.4;
+
         window.App = new App(models);
+        window.App.newLocation(latitude, longitude, x, y);
     });
 } else {
     $(document).ready(function() {
