@@ -30,7 +30,7 @@ Raphael(10, 10, 1000, 400, function () {
 			latLon = world.getLatLon(x, y);
 
 		var search = new Search();
-		search.location(latLon.lat, latLon.lon, function(location) {
+		search.locationByGeo(latLon.lat, latLon.lon, function(location) {
 			console.log(location);
 		});
 	});
