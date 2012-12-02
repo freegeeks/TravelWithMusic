@@ -5,7 +5,7 @@ Config.world = {
 	}
 };
 
-Raphael(10, 10, 1000, 400, function () {
+Raphael('worldMap', 1000, 400, function () {
 	var r = this;
 	var over = function () {
 		this.c = this.c || this.attr("fill");

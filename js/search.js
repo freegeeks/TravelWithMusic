@@ -16,7 +16,7 @@ Search.prototype.artists = function (options, callback) {
 
     var data = new Object;
     data.api_key    = Config.echonest.apiKey;
-    data.results    = 1;
+    data.results    = 10;
     data.start      = 0;
 
     if (options.mood) {
@@ -138,11 +138,13 @@ Search.prototype.weatherByLocation = function(location, callback) {
     $.getJSON(weatherYQL, function(response) {
         var result = false;
         if (response.query && response.query.count == 1) {
-            result = response.query.results.channel.item.condition
+            result = response.query.results.channel.item.condition;
         }
         callback(result);
     });
 };
+
+if (typeof require === 'undefined') {
 
 var search = new Search();
 
@@ -158,7 +160,7 @@ search.locationByGeo(52.37, 4.89, function(location) {
                 {
                     name: location.country,
                     dance: 0,
-                    frequency: 10,
+                    frequency: 4,
                     mood: mood
                 }
             ]
@@ -172,3 +174,5 @@ search.locationByGeo(52.37, 4.89, function(location) {
 
     });
 });
+
+}
