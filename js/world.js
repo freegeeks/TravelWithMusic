@@ -5,15 +5,15 @@ Config.world = {
 	}
 };
 
-Raphael(10, 10, 1000, 400, function () {
+Raphael('worldMap', 1000, 400, function () {
 	var r = this;
 	var over = function () {
 		this.c = this.c || this.attr("fill");
-		this.stop().animate({fill: "#bacabd"}, 500);
-	},
-		out = function () {
-			this.stop().animate({fill: this.c}, 500);
-		};
+		this.stop().animate({fill: "#555"}, 500);
+	};
+	var out = function () {
+		this.stop().animate({fill: this.c}, 500);
+	};
 	r.setStart();
 	var hue = Math.random();
 	for (var country in worldmap.shapes) {
