@@ -273,7 +273,7 @@ nav ul li {float:left;}
 .play {float:left;background:url(../img/play.png) no-repeat;width:146px;height:40px;margin:5px 0 0 5px;cursor:pointer;}
 .play:hover {opacity:.8;}
 
-.pin-inner {background: url("../img/pin-over-green.png") no-repeat scroll 0 0 transparent;
+.pin-inner {background: url("../img/pin-over-orange.png") no-repeat scroll 0 0 transparent;
     display: none;
     float: left;
     height: 215px;
@@ -283,6 +283,8 @@ nav ul li {float:left;}
     width: 241px;
     z-index: 1;
 }
+
+.pin-green {background: url("../img/pin-over-green.png") no-repeat scroll 0 0 transparent;}
 
 
 
