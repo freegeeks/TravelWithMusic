@@ -10,12 +10,12 @@ var Search = function() {
     // Constructor
 };
 
-Search.prototype.photos = function (options, callback) {
+Search.prototype.photos = function (text, callback) {
     var url = 'http://api.flickr.com/services/rest?method=flickr.photos.search';
 
     var data        = new Object;
     data.api_key    = '3c4c58b74a18ca8a57454b7646bdfe2c';
-    data.text       = 'Amsterdam';
+    data.text       = text;
     data.format     = 'json';
     data.nojsoncallback     = 1;
     data.per_page   = 50;
@@ -25,17 +25,19 @@ Search.prototype.photos = function (options, callback) {
         url: url,
         data: data,
         success: function(data) {
+            var found = false;
             var photos = data.photos.photo;
             for (var i in photos) {
-                photo = photos[i];
+                var photo = photos[i];
                 var img = new Image();
+                img.onload = function() {
+                    if (this.width >= 1024 && this.height >= 768 && !found) {
+                        found = true;
+                        callback(this.src);
+                    }
+                };
                 img.src = 'http://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_b.jpg';
-                if (img.width == 1024 && img.height == 768) {
-                    console.debug(img.src);
-                }
-
             }
-            //callback(img);
         }
     });
 }
@@ -193,7 +195,9 @@ Search.prototype.weatherByLocation = function(location, callback) {
 if (typeof require === 'undefined') {
 
 var search = new Search();
-search.photos([], function () {
+search.photos('Amsterdam', function (source) {
+    console.log(source);
+    $('.wrapper .background').css('background-image', 'url(' + source + ')');
     return true;
 });
 
