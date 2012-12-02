@@ -1,22 +1,44 @@
 var App = function(models) {
     var self = this;
-    this.models = models;
+    
+    if (typeof models === 'object') {
+        this.models = models;
 
-    var listenPlay = function() {
-        var uri = models.player.track.uri;
-        if (typeof self.mapping === 'undefined' || typeof self.mapping[uri] === 'undefined') {
-            return true;
+        var listenPlay = function() {
+            var uri = models.player.track.uri;
+            if (typeof self.mapping === 'undefined' || typeof self.mapping[uri] === 'undefined') {
+                return true;
+            }
+
+            var location = self.mapping[uri];
+            var search = new Search();
+            search.photos(location.name, function(source) {
+                $('.wrapper .background').css('background-image', 'url(' + source + ')');
+            });
+        };
+
+        // Keep track of current song
+        this.models.player.addEventListener('change', listenPlay);
+    }
+
+    // Dom events
+    this.bindDomEvents();
+};
+
+App.prototype.bindDomEvents = function() {
+    var tracking = false;
+    $(document).on('mousedown', '.pin-over-big', function(event) {
+        tracking = event.pageY;
+    });
+    $(document).on('mousemove', '.pin-over-big', function(event) {
+        if (tracking !== false) {
+            var newTracking = event.pageY;
+            console.log(tracking, newTracking);
         }
-
-        var location = self.mapping[uri];
-        var search = new Search();
-        search.photos(location.name, function(source) {
-            $('.wrapper .background').css('background-image', 'url(' + source + ')');
-        });
-    };
-
-    // Keep track of current song
-    this.models.player.addEventListener('change', listenPlay);
+    });
+    $(document).on('mouseup', '.pin-over-big', function(event) {
+        tracking = false;
+    });
 };
 
 App.prototype.search = function(latitude, longitude, callback) {
@@ -84,12 +106,16 @@ App.prototype._search = function(latitude, longitude, callback) {
     });
 };
 
-require(['$api/models'], function(models) {
-    window.App = new App(models);
-    window.App.search(52.37, 4.89, function(playlist, mapping) {
-        models.player.setShuffle(true);
-        models.player.playContext(playlist);
+if (typeof require !== 'undefined') {
+    require(['$api/models'], function(models) {
+        window.App = new App(models);
+        window.App.search(52.37, 4.89, function(playlist, mapping) {
+            models.player.setShuffle(true);
+            models.player.playContext(playlist);
 
-        window.App.mapping = mapping;
+            window.App.mapping = mapping;
+        });
     });
-});
+} else {
+    window.App = new App();
+}
