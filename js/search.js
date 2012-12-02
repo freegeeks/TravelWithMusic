@@ -18,7 +18,7 @@ Search.prototype.photos = function (text, callback) {
     data.text       = text;
     data.format     = 'json';
     data.nojsoncallback     = 1;
-    data.per_page   = 50;
+    data.per_page   = 100;
     data.geo_context = 2;
 
     $.ajax({
@@ -27,6 +27,7 @@ Search.prototype.photos = function (text, callback) {
         success: function(data) {
             var found = false;
             var photos = data.photos.photo;
+            photos.sort(function() { return Math.round(Math.random())-0.5; });
             for (var i in photos) {
                 var photo = photos[i];
                 var img = new Image();
@@ -180,7 +181,7 @@ Search.prototype.locationByGeo = function(latitude, longitude, callback) {
 };
 
 Search.prototype.weatherByLocation = function(location, callback) {
-    var wsql = 'select * from weather.forecast where woeid=' + location.woeid + ' and u="' + Config.yahoo.temperatureUnit  + '"',
+    var wsql = 'select item.condition.code from weather.forecast where woeid=' + location.woeid + ' and u="' + Config.yahoo.temperatureUnit  + '"',
         weatherYQL = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(wsql) + '&format=json&callback=?';
 
     $.getJSON(weatherYQL, function(response) {
@@ -205,7 +206,7 @@ search.locationByGeo(52.37, 4.89, function(location) {
 
     search.weatherByLocation(location, function(weather) {
         var mood = 'happy';
-        if (weather.text == 'Partly Cloudy') {
+        if (weather.code < 29 || weather.code > 37) {
             mood = 'sad';
         }
         search.load({
@@ -217,10 +218,6 @@ search.locationByGeo(52.37, 4.89, function(location) {
                     frequency: 4,
                     mood: mood
                 },
-                {
-                    name: 'italy',
-                    mood: 'happy'
-                }
             ]
         }, function(data) {
             for (var i in data) {
