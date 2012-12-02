@@ -149,5 +149,8 @@ if (typeof require !== 'undefined') {
         });
     });
 } else {
+    var pin = $(Config.pinTemplate);
+    $('.wrapper').append(pin);
+
     window.App = new App();
 }
