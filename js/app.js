@@ -1,12 +1,12 @@
 var App = function(models) {
     var self = this;
-    this.pinTemplate = $('.template-pin').html();
+    this.pinTemplate = $('.pin-template').html();
     
     if (typeof models === 'object') {
         this.models = models;
 
         var listenPlay = function() {
-            var uri = models.player.track.uri;
+            var uri = self.models.player.track.uri;
             if (typeof self.mapping === 'undefined' || typeof self.mapping[uri] === 'undefined') {
                 return true;
             }
@@ -30,7 +30,10 @@ App.prototype.bindDomEvents = function() {
     var tracking = false;
     self = this;
 
-    // World
+    // Play
+    $('.play').bind('click', function() {
+        self.play();
+    });
 
     // Pin
     $(document).on('mouseover', '.pin-over', function(event) {
@@ -45,14 +48,19 @@ App.prototype.bindDomEvents = function() {
 
     $(document).on('click', '.pin-over-big', function(event) {
         var inner = $(this).find('> .pin-over-inner'),
-            classes = inner.attr('class'),
-            matches = classes.match(/opt-([0-9]+)/),
-            current = parseInt(matches[1], 10),
+            matchesOpt = inner.attr('class').match(/opt-([0-9]+)/),
+            matchesName = inner.parent().attr('class').match(/pin-over-([a-z]+)/),
+            name = matchesName[1],
+            current = parseInt(matchesOpt[1], 10),
             next = current + 1;
 
         if (next > 4) {
             next = 1;
         }
+
+        var newLocation = inner.parents('.pin').data('location');
+        newLocation[name] = next;
+        inner.parents('.pin').data('location', newLocation);
 
         inner.removeClass('opt-' + current).addClass('opt-' + next);
     });
@@ -80,22 +88,21 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
                 name: location.country,
                 dance: 1,
                 frequency: 4,
-                mood: weather.mood
+                mood: (weather.mood == 'sad') ? 1 : 4
             };
 
-            var first = $('.pin').length === 0;
+            var first = ($('.pin').length === 0);
             var pin = $('<div />');
-            pin.addClass(first ? 'pin-green' : 'pin-orange');
-            pin.css('top', y - 45);
-            pin.css('left', x - 25);
-
-            var pinOver = $('<div />');
-            pinOver.addClass('pin');
-            pinOver.html(self.pinTemplate);
-            pinOver.data('location', data);
+            pin.addClass('pin');
+            if (first) {
+                pin.addClass('pin-green');
+            }
+            pin.css('top', y - 30);
+            pin.css('left', x - 21);
+            pin.html(self.pinTemplate);
+            pin.data('location', data);
 
             $('#worldMap').append(pin);
-            $('#worldMap').append(pinOver);
         });
     });
 };
@@ -103,19 +110,36 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
 App.prototype.play = function() {
     var self = this;
     var locations = [];
+    var mapping = [0, 0, 0.33, 0.66, 1];
     $('.pin').each(function() {
         var node = $(this),
             location = $(this).data('location');
+
+        location.mood = (location.mood <= 2) ? 'happy' : 'sad';
+        location.frequency = mapping[location.frequency];
+        location.dance = mapping[location.dance];
+
         locations.push(location);
     });
 
-    console.log(locations);
+    var query = {
+        themes: this.themes(),
+        locations: locations
+    };
+
+    this.search(query, function(playlist, mapping) {
+        self.mapping = mapping;
+
+        self.models.player.setShuffle(true);
+        self.models.player.playContext(playlist);
+    });
 };
 
-App.prototype.search = function(latitude, longitude, callback) {
+App.prototype.search = function(query, callback) {
     var self = this;
 
-    this._search(latitude, longitude, function(data, mapping) {
+    var search = new Search();
+    search.load(query, function(data) {
         var results = [],
             mapping = {};
         for (var i in data) {
@@ -152,40 +176,9 @@ App.prototype.search = function(latitude, longitude, callback) {
     });
 };
 
-App.prototype._search = function(latitude, longitude, callback) {
-    var self = this;
-
-    var search = new Search();
-    search.locationByGeo(latitude, longitude, function(location) {
-        search.weatherByLocation(location, function(weather) {
-            search.load({
-                themes: self.themes(),
-                locations: [
-                    {
-                        name: location.country,
-                        dance: 0,
-                        frequency: 4,
-                        mood: weather.mood
-                    // },
-                    // {
-                    //     name: 'italy',
-                    //     mood: 'happy'
-                    }
-                ]
-            }, callback);
-        });
-    });
-};
-
 if (typeof require !== 'undefined') {
     require(['$api/models'], function(models) {
         window.App = new App(models);
-        window.App.search(52.37, 4.89, function(playlist, mapping) {
-            models.player.setShuffle(true);
-            models.player.playContext(playlist);
-
-            window.App.mapping = mapping;
-        });
     });
 } else {
     $(document).ready(function() {

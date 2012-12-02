@@ -33,9 +33,10 @@ Search.prototype.photos = function (text, callback) {
                 var img = new Image();
                 img.onload = function() {
                     //if (this.width >= 1024 && this.height >= 768 && !found) {
+                    if (!found) {
                         found = true;
                         callback(this.src);
-                    //}
+                    }
                 };
                 img.src = 'http://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_b.jpg';
             }
