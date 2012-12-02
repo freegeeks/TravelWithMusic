@@ -126,6 +126,8 @@ p {font-size:1em;}
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;	
+	
+	margin-top:-40px;
 }
 
 nav {float:right;height:54px;width:370px;margin-right:40px;
