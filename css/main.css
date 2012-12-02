@@ -112,7 +112,7 @@ header {width:100%;height:120px;display:block;background:url(../img/bg-top.png) 
 p {font-size:1em;}
 .logo {float:left;}
 
-.wrapper{width:100%;height:700px;float:left;overflow:hidden;}
+.wrapper{width:100%;float:left;overflow:hidden;}
 .wrapper .background {
 	position: absolute;
 	background-repeat: no-repeat;
@@ -131,7 +131,6 @@ p {font-size:1em;}
 }
 
 nav {float:right;height:54px;width:370px;margin-right:40px;
-
 background-image: url(../img/thematic.png), url(../img/thematic-icons.png);
 background-repeat: no-repeat, no-repeat;
 background-position: left, 110px 0;
@@ -167,8 +166,6 @@ nav ul li {float:left;}
 	background:url(../img/pin-sprite.png) -65px 50px;
 }
 
-
-.pin {}
 
 .pin-over {
 	position: absolute;
