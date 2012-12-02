@@ -75,7 +75,6 @@ Search.prototype.songs = function (options, callback) {
     });
 };
 
-<<<<<<< HEAD
 // Search for songs based on the full config
 Search.prototype.load = function(options, callback) {
     var results = [];
@@ -120,7 +119,7 @@ Search.prototype.load = function(options, callback) {
         }
     }
 };
-=======
+
 Search.prototype.locationByGeo = function(latitude, longitude, callback) {
     var geoAPI = 'http://where.yahooapis.com/geocode?location=' + latitude + ',' + longitude + '&flags=J&gflags=R&appid=' + Config.yahoo.appId;
     $.getJSON(geoAPI, function(response) {
@@ -144,8 +143,6 @@ Search.prototype.weatherByLocation = function(location, callback) {
         callback(result);
     });
 };
-
->>>>>>> 153a207b9458e0a4ab80aa126cdf190b6a48e36b
 
 var search = new Search();
 search.load({
