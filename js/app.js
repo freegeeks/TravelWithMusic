@@ -36,6 +36,14 @@ App.prototype.bindDomEvents = function() {
     });
 
     // Pin
+    $(document).on('mouseover mouseout', '.pin', function(event) {
+        if (event.type === 'mouseover') {
+            $(this).addClass('hover');
+        } else {
+            $(this).removeClass('hover');
+        }
+    });
+
     $(document).on('mouseover', '.pin-over', function(event) {
         $('.pin-over-big').removeClass('pin-over-big').addClass('pin-over');
 
@@ -102,6 +110,8 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
             pin.addClass('pin');
             if (!first) {
                 pin.addClass('pin-green');
+            } else {
+                pin.addClass('hover');
             }
             pin.css('top', y - 30);
             pin.css('left', x - 21);

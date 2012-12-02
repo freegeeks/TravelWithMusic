@@ -285,7 +285,7 @@ nav ul li {float:left;}
 
 
 .pin {background:url(../img/pin-sprite.png) -5px 36px;width:30px;height:30px;top:100px;left:350px;position:absolute;cursor:pointer;}
-.pin:hover .pin-inner{display:block;}
+.pin.hover .pin-inner{display:block;}
 
 .pin.pin-green {background:url(../img/pin-sprite.png) -70px 36px;}
 
