@@ -1,3 +1,4 @@
+var themes = [];
 var App = function(models) {
     var self = this;
     
@@ -27,6 +28,7 @@ var App = function(models) {
 
 App.prototype.bindDomEvents = function() {
     var tracking = false;
+    self = this;
 
     $(document).on('mouseover', '.pin-over', function(event) {
         $('.pin-over-big').removeClass('pin-over-big').addClass('pin-over');
@@ -51,6 +53,24 @@ App.prototype.bindDomEvents = function() {
 
         inner.removeClass('opt-' + current).addClass('opt-' + next);
     });
+
+    $(document).on('click', 'header nav ul li a', function () {
+        self.theme($(this).attr('class'));
+    });
+};
+
+App.prototype.theme = function (theme) {
+    var found = 0;
+    for (var i in themes) {
+        if (themes[i] == theme) {
+            themes[i] = null;
+            found = 1;
+        }
+    }
+    if (found === 0) {
+        themes.push(theme);
+    }
+    console.log(themes);
 };
 
 App.prototype.search = function(latitude, longitude, callback) {
@@ -100,7 +120,7 @@ App.prototype._search = function(latitude, longitude, callback) {
     search.locationByGeo(latitude, longitude, function(location) {
         search.weatherByLocation(location, function(weather) {
             search.load({
-                themes: [ ],
+                themes: themes,
                 locations: [
                     {
                         name: location.country,

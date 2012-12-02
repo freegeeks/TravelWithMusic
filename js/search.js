@@ -85,7 +85,12 @@ Search.prototype.songs = function (options, callback) {
         data.results= options.results;
     }
     if (options.description) {
-        data.description= options.description;
+        if (options.description == 'xmas') {
+            data.song_type = 'christmas';
+        }
+        else {
+            data.description= options.description;
+        }
     }
     if (options.artist_id) {
         data.artist_id = options.artist_id;
@@ -133,6 +138,9 @@ Search.prototype.loadByLocation = function(options, location, callback) {
     if (options.themes.length) {
         for (var i in options.themes) {
             var theme = options.themes[i];
+            if (theme === null) {
+                continue;
+            }
             this.songs({ description: theme }, function (data) {
                 results = results.concat(data);
             });
