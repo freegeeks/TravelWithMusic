@@ -168,7 +168,7 @@ nav ul li {float:left;}
 }
 
 
-.pin {width:241px;height:241px;background:url(../img/pin-over.png) no-repeat;top:85px;left:350px;position:absolute;z-index:1;}
+.pin {}
 
 .pin-over {
 	position: absolute;
@@ -273,6 +273,22 @@ nav ul li {float:left;}
 .play {float:left;background:url(../img/play.png) no-repeat;width:146px;height:40px;margin:5px 0 0 5px;cursor:pointer;}
 .play:hover {opacity:.8;}
 
+.pin-inner {background: url("../img/pin-over-green.png") no-repeat scroll 0 0 transparent;
+    display: none;
+    float: left;
+    height: 215px;
+    left: -100px;
+    position: absolute;
+    top: -179px;
+    width: 241px;
+    z-index: 1;
+}
+
+
+
+.pin:hover .pin-inner{display:block;}
+
+.pin {background:url(../img/pin-sprite.png) -70px 36px;width:30px;height:30px;top:100px;left:350px;position:absolute;cursor:pointer;}
 
 
 @media (max-width: 767px) {
