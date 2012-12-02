@@ -156,6 +156,8 @@ nav ul li {float:left;}
 
 .pin-over {
 	position: absolute;
+	-webkit-user-select: none;
+	user-select: none;
 }
 .pin-over-inner {
 	border-radius: 50%;
@@ -169,7 +171,7 @@ nav ul li {float:left;}
 	left: 35px;
 }
 .pin-over.pin-over-weather .pin-over-inner {
-	background:url(../img/weather-sprites.png);
+	background-image: url(../img/weather-sprites.png);
 	background-position: 2px -61px;
 }
 .pin-over.pin-over-weather .pin-over-inner.opt-2 { background-position: -56px -61px; }
@@ -181,7 +183,7 @@ nav ul li {float:left;}
 	left: 96px;
 }
 .pin-over.pin-over-dance .pin-over-inner {
-	background:url(../img/dance-sprites.png);
+	background-image: url(../img/dance-sprites.png);
 	background-position: 2px -61px;
 }
 .pin-over.pin-over-dance .pin-over-inner.opt-2 { background-position: -52px -61px; }
@@ -193,7 +195,7 @@ nav ul li {float:left;}
 	left: 155px;
 }
 .pin-over.pin-over-settings .pin-over-inner {
-	background:url(../img/settings-sprites.png);
+	background-image: url(../img/settings-sprites.png);
 	background-position: 2px -61px;
 }
 .pin-over.pin-over-settings .pin-over-inner.opt-2 { background-position: -52px -61px; }

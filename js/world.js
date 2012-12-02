@@ -61,15 +61,4 @@ Raphael('worldMap', 1000, 400, function () {
 	var setLocation = function(latitude, longitude) {
 		r.circle().attr({fill: "none", stroke: "#f00", r: 5}).attr(world.getXY(latitude, longitude));
 	};
-
-	if (typeof require == 'function') {
-		require(['$api/location'], function($location) {
-			var geoPosition = $location.Location.query();
-			geoPosition.load(['latitude', 'longitude']).done(function(geoPosition) {
-				setLocation(geoPosition.latitude, geoPosition.longitude);
-			});
-		});
-	} else {
-		setLocation(52.37, 4.89);
-	}
 });

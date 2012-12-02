@@ -27,17 +27,29 @@ var App = function(models) {
 
 App.prototype.bindDomEvents = function() {
     var tracking = false;
-    $(document).on('mousedown', '.pin-over-big', function(event) {
-        tracking = event.pageY;
+
+    $(document).on('mouseover', '.pin-over', function(event) {
+        $('.pin-over-big').removeClass('pin-over-big').addClass('pin-over');
+
+        $(this).addClass('pin-over-big');
     });
-    $(document).on('mousemove', '.pin-over-big', function(event) {
-        if (tracking !== false) {
-            var newTracking = event.pageY;
-            console.log(tracking, newTracking);
+
+    $(document).on('mouseout', '.pin-over-big', function(event) {
+        $(this).removeClass('pin-over-big').addClass('pin-over');
+    });
+
+    $(document).on('click', '.pin-over-big', function(event) {
+        var inner = $(this).find('> .pin-over-inner'),
+            classes = inner.attr('class'),
+            matches = classes.match(/opt-([0-9]+)/),
+            current = parseInt(matches[1], 10),
+            next = current + 1;
+
+        if (next > 4) {
+            next = 1;
         }
-    });
-    $(document).on('mouseup', '.pin-over-big', function(event) {
-        tracking = false;
+
+        inner.removeClass('opt-' + current).addClass('opt-' + next);
     });
 };
 
