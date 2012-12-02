@@ -65,8 +65,10 @@ App.prototype.bindDomEvents = function() {
         inner.removeClass('opt-' + current).addClass('opt-' + next);
     });
 
-    $(document).on('dblclick', '.pin', function(event) {
-        $(this).remove();
+    $(document).on('keydown', function(event) {
+        if (event.which === 68) {
+            $('.pin:not(.pin-green)').remove();
+        }
     });
 
     // Themes
@@ -115,14 +117,13 @@ App.prototype.play = function() {
     var self = this;
     var locations = [];
     var mapping = [0, 0, 0.33, 0.66, 1];
-    var mappingFreq = [0, 10, 20, 30, 40];
     $('.pin').each(function() {
         var node = $(this),
             location = $(this).data('location');
 
         var other = {
             mood: (location.mood <= 2) ? 'happy' : 'sad',
-            frequency: mappingFreq[location.frequency],
+            frequency: location.frequency,
             dance: mapping[location.dance],
             name: location.name
         };
