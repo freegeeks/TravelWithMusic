@@ -151,7 +151,13 @@ Search.prototype.loadByLocation = function(options, location, callback) {
                 dance: location.dance,
                 results: location.frequency
             }, function (data) {
-                results = results.concat(data);
+                for (var i in data) {
+                    var song = data[i];
+                    song.location = location;
+
+                    results.push(song);
+                }
+
                 if (k++ == loop) {
                     callback(results);
                 }
