@@ -1,4 +1,3 @@
-var themes = [];
 var App = function(models) {
     var self = this;
     this.pinTemplate = $('.template-pin').html();
@@ -58,23 +57,18 @@ App.prototype.bindDomEvents = function() {
         inner.removeClass('opt-' + current).addClass('opt-' + next);
     });
 
+    // Themes
     $(document).on('click', 'header nav ul li a', function () {
-        self.theme($(this).attr('class'));
+        $(this).toggleClass('active');
     });
 };
 
-App.prototype.theme = function (theme) {
-    var found = 0;
-    for (var i in themes) {
-        if (themes[i] == theme) {
-            themes[i] = null;
-            found = 1;
-        }
-    }
-    if (found === 0) {
-        themes.push(theme);
-    }
-    console.log(themes);
+App.prototype.themes = function() {
+    var themes = [];
+    $('header nav ul li a.active').each(function() {
+        themes.push($(this).data('theme'));
+    });
+    return themes;
 };
 
 App.prototype.newLocation = function(latitude, longitude, x, y) {
@@ -98,11 +92,24 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
             var pinOver = $('<div />');
             pinOver.addClass('pin');
             pinOver.html(self.pinTemplate);
+            pinOver.data('location', data);
 
             $('#worldMap').append(pin);
             $('#worldMap').append(pinOver);
         });
     });
+};
+
+App.prototype.play = function() {
+    var self = this;
+    var locations = [];
+    $('.pin').each(function() {
+        var node = $(this),
+            location = $(this).data('location');
+        locations.push(location);
+    });
+
+    console.log(locations);
 };
 
 App.prototype.search = function(latitude, longitude, callback) {
@@ -152,7 +159,7 @@ App.prototype._search = function(latitude, longitude, callback) {
     search.locationByGeo(latitude, longitude, function(location) {
         search.weatherByLocation(location, function(weather) {
             search.load({
-                themes: themes,
+                themes: self.themes(),
                 locations: [
                     {
                         name: location.country,
