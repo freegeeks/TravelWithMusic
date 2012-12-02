@@ -139,8 +139,8 @@ background-position: left, 110px 0;
 
 
 nav ul {float:right;width:250px;}
-nav ul li a {width:37px;height:68px;display:block;margin-right:13px;text-indent:-9999px;float:left;}
-nav ul li a.active, nav ul li a:hover {background:url(../img/thematic-icons-over.png) no-repeat center top;} 
+nav ul li a {width:37px;height:68px;display:block;margin-right:13px;text-indent:-9999px;float:left;opacity:.4;}
+nav ul li a.active, nav ul li a:hover {background:url(../img/thematic-icons-over.png) no-repeat center top;opacity:1;} 
 
 nav ul li {float:left;}
 
