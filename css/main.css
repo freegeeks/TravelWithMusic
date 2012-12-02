@@ -119,14 +119,13 @@ p {font-size:1em;}
 	width: 100%;
 	height: 100%;
 	opacity: 0.1;
-				background-position:center;
-			background:no-repeat;
-			background:fixed;
-			
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			background-size: cover;	
+	background-position:center;
+	background:no-repeat;
+	background:fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;	
 }
 
 nav {float:right;height:54px;width:370px;margin-right:40px;
