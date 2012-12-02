@@ -1,13 +1,12 @@
 Config.world = {
-	rectFill: '0-#9bb7cb-#adc8da'
+	country: {
+		stroke: '#222222',
+		fill: '#0a0a0a'
+	}
 };
 
 Raphael(10, 10, 1000, 400, function () {
 	var r = this;
-	r.rect(0, 0, 1000, 400, 10).attr({
-		stroke: "none",
-		fill: Config.world.rectFill
-	});
 	var over = function () {
 		this.c = this.c || this.attr("fill");
 		this.stop().animate({fill: "#bacabd"}, 500);
@@ -18,12 +17,20 @@ Raphael(10, 10, 1000, 400, function () {
 	r.setStart();
 	var hue = Math.random();
 	for (var country in worldmap.shapes) {
-		// var c = Raphael.hsb(Math.random(), .5, .75);
-		// var c = Raphael.hsb(.11, .5, Math.random() * .25 - .25 + .75);
-		r.path(worldmap.shapes[country]).attr({stroke: "#ccc6ae", fill: "#f0efeb", "stroke-opacity": 0.25});
+		r.path(worldmap.shapes[country]).attr(Config.world.country);
 	}
 	var world = r.setFinish();
 	world.hover(over, out);
+	world.click(function(event) {
+		var x = event.layerX,
+			y = event.layerY,
+			latLon = world.getLatLon(x, y);
+
+		var search = new Search();
+		search.locationByGeo(latLon.lat, latLon.lon, function(location) {
+			console.log(location);
+		});
+	});
 	// world.animate({fill: "#666", stroke: "#666"}, 2000);
 	world.getXY = function (lat, lon) {
 		return {

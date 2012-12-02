@@ -1,6 +1,10 @@
 Config.echonest = {
     apiKey: 'MXNBGHMQLSOTLCNWW'
 };
+Config.yahoo = {
+    appId: 'CktiHV70',
+    temperatureUnit: 'c'
+};
 
 var Search = function() {
     // Constructor
@@ -71,6 +75,7 @@ Search.prototype.songs = function (options, callback) {
     });
 };
 
+<<<<<<< HEAD
 // Search for songs based on the full config
 Search.prototype.load = function(options, callback) {
     var results = [];
@@ -115,6 +120,32 @@ Search.prototype.load = function(options, callback) {
         }
     }
 };
+=======
+Search.prototype.locationByGeo = function(latitude, longitude, callback) {
+    var geoAPI = 'http://where.yahooapis.com/geocode?location=' + latitude + ',' + longitude + '&flags=J&gflags=R&appid=' + Config.yahoo.appId;
+    $.getJSON(geoAPI, function(response) {
+        var result = false;
+        if (response.ResultSet.Found == 1) {
+            result = response.ResultSet.Results[0];
+        }
+        callback(result);
+    });
+};
+
+Search.prototype.weatherByLocation = function(location, callback) {
+    var wsql = 'select * from weather.forecast where woeid=' + location.woeid + ' and u="' + Config.yahoo.temperatureUnit  + '"',
+        weatherYQL = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(wsql) + '&format=json&callback=?';
+
+    $.getJSON(weatherYQL, function(response) {
+        var result = false;
+        if (response.query && response.query.count == 1) {
+            result = response.query.results.channel.item.condition
+        }
+        callback(result);
+    });
+};
+
+>>>>>>> 153a207b9458e0a4ab80aa126cdf190b6a48e36b
 
 var search = new Search();
 search.load({
@@ -145,4 +176,12 @@ search.load({
             console.debug(data[i].tracks[0].foreign_id + ' ' + data[i].artist_name + ' - ' + data[i].title);
         }
     }
+});
+
+search.locationByGeo(52.37, 4.89, function(location) {
+    console.log(location);
+
+    search.weatherByLocation(location, function(weather) {
+        console.log(weather);
+    });
 });
