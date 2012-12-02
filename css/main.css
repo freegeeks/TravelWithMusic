@@ -107,6 +107,23 @@ button {width: auto; overflow: visible;}
 
 /* app styles*/
 
-html, body {background:#333;color:white;}
-header {width:100%;height:120px;float:left;display:block;}
-p {font-size:5em;}
+html, body {background:#333;color:white;background:url(../img/bg.png) repeat-x 0 70px;}
+header {width:100%;height:120px;float:left;display:block;background:url(../img/bg-top.png) repeat-x;height:94px;min-width:600px;}
+p {font-size:1em;}
+.wrapper{width:100%;height:700px;float:left;overflow:hidden;}
+
+nav {float:right;height:54px;width:370px;margin-right:40px;
+
+background-image: url(../img/thematic.png), url(../img/thematic-icons.png);
+background-repeat: no-repeat, no-repeat;
+background-position: left, 110px 0;
+
+}
+
+
+nav ul {float:right;width:250px;}
+nav ul li a {width:37px;height:68px;display:block;margin-right:13px;text-indent:-9999px;float:left;}
+
+nav ul li a.active, nav a:hover {background:url(../img/thematic-icons-over.png) no-repeat center top;}
+
+
