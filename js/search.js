@@ -1,6 +1,10 @@
 Config.echonest = {
     apiKey: 'MXNBGHMQLSOTLCNWW'
 };
+Config.yahoo = {
+    appId: 'CktiHV70',
+    temperatureUnit: 'c'
+};
 
 var Search = function() {
     // Constructor
@@ -56,10 +60,42 @@ Search.prototype.load = function(options, callback) {
     });
 };
 
+Search.prototype.location = function(latitude, longitude, callback) {
+    var geoAPI = 'http://where.yahooapis.com/geocode?location=' + latitude + ',' + longitude + '&flags=J&gflags=R&appid=' + Config.yahoo.appId;
+    $.getJSON(geoAPI, function(response) {
+        var result = false;
+        if (response.ResultSet.Found == 1) {
+            result = response.ResultSet.Results[0];
+        }
+        callback(result);
+    });
+};
+
+Search.prototype.weather = function(location, callback) {
+    var wsql = 'select * from weather.forecast where woeid=' + location.woeid + ' and u="' + Config.yahoo.temperatureUnit  + '"',
+        weatherYQL = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent(wsql) + '&format=json&callback=?';
+
+    $.getJSON(weatherYQL, function(response) {
+        var result = false;
+        if (response.query && response.query.count == 1) {
+            result = response.query.results.channel.item.condition
+        }
+        callback(result);
+    });
+};
+
 
 var search = new Search();
 search.load({
     location: 'netherlands'
 }, function(data) {
     console.log(data);
+});
+
+search.location(52.37, 4.89, function(location) {
+    console.log(location);
+
+    search.weather(location, function(weather) {
+        console.log(weather);
+    });
 });
