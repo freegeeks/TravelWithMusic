@@ -32,10 +32,10 @@ Search.prototype.photos = function (text, callback) {
                 var photo = photos[i];
                 var img = new Image();
                 img.onload = function() {
-                    if (this.width >= 1024 && this.height >= 768 && !found) {
+                    //if (this.width >= 1024 && this.height >= 768 && !found) {
                         found = true;
                         callback(this.src);
-                    }
+                    //}
                 };
                 img.src = 'http://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '_b.jpg';
             }
@@ -188,6 +188,11 @@ Search.prototype.weatherByLocation = function(location, callback) {
         var result = false;
         if (response.query && response.query.count == 1) {
             result = response.query.results.channel.item.condition;
+
+            result.mood = 'happy';
+            if (result.code < 29 || result.code > 37) {
+                result.mood = 'sad';
+            }
         }
         callback(result);
     });
@@ -205,10 +210,6 @@ search.photos('Amsterdam', function (source) {
 search.locationByGeo(52.37, 4.89, function(location) {
 
     search.weatherByLocation(location, function(weather) {
-        var mood = 'happy';
-        if (weather.code < 29 || weather.code > 37) {
-            mood = 'sad';
-        }
         search.load({
             themes: [ ],
             locations: [
@@ -216,7 +217,7 @@ search.locationByGeo(52.37, 4.89, function(location) {
                     name: location.country,
                     dance: 0,
                     frequency: 4,
-                    mood: mood
+                    mood: weather.mood
                 },
             ]
         }, function(data) {

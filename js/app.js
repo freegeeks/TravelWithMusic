@@ -1,8 +1,18 @@
 var App = function(models) {
+    var self = this;
     this.models = models;
 
     var listenPlay = function() {
-        console.log(models.player.track);
+        var uri = models.player.track.uri;
+        if (typeof self.mapping === 'undefined' || typeof self.mapping[uri] === 'undefined') {
+            return true;
+        }
+
+        var location = self.mapping[uri];
+        var search = new Search();
+        search.photos(location.name, function(source) {
+            $('.wrapper .background').css('background-image', 'url(' + source + ')');
+        });
     };
 
     // Keep track of current song
@@ -62,11 +72,11 @@ App.prototype._search = function(latitude, longitude, callback) {
                         name: location.country,
                         dance: 0,
                         frequency: 4,
-                        mood: 'happy'
-                    },
-                    {
-                        name: 'italy',
-                        mood: 'happy'
+                        mood: weather.mood
+                    // },
+                    // {
+                    //     name: 'italy',
+                    //     mood: 'happy'
                     }
                 ]
             }, callback);
@@ -80,6 +90,6 @@ require(['$api/models'], function(models) {
         models.player.setShuffle(true);
         models.player.playContext(playlist);
 
-        console.log(mapping);
+        window.App.mapping = mapping;
     });
 });
