@@ -20,6 +20,7 @@ App.prototype.search = function(latitude, longitude, callback) {
                     'name', 'playable'
                 ]).done(function(track) {
                     if (track.playable) {
+                        console.log(track.name);
                         playlist.tracks.add(track);
                     }
                     
@@ -48,8 +49,13 @@ App.prototype._search = function(latitude, longitude, callback) {
                         frequency: 4,
                         mood: 'happy'
                     }
+                    // {
+                    //     name: 'italy',
+                    //     mood: 'happy'
+                    // }
                 ]
             }, function(data) {
+                console.log(data);
                 var results = [];
                 for (var i in data) {
                     if (data[i].tracks.length && data[i].tracks[0].foreign_id) {
@@ -67,7 +73,7 @@ App.prototype._search = function(latitude, longitude, callback) {
 require(['$api/models'], function(models) {
     window.App = new App(models);
     window.App.search(52.37, 4.89, function(playlist) {
-        console.log(playlist);
+        models.player.setShuffle(true);
         models.player.playContext(playlist);
     });
 });

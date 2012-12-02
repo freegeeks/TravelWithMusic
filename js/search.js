@@ -16,7 +16,7 @@ Search.prototype.artists = function (options, callback) {
 
     var data = new Object;
     data.api_key    = Config.echonest.apiKey;
-    data.results    = 10;
+    data.results    = 50;
     data.start      = 0;
 
     if (options.mood) {
@@ -81,7 +81,7 @@ Search.prototype.load = function(options, callback) {
     var that = this;
     
     // search by themes
-    if (options.themes) {
+    if (options.themes.length) {
         for (var i in options.themes) {
             var theme = options.themes[i];
             this.songs({ description: theme }, function (data) {
@@ -94,14 +94,15 @@ Search.prototype.load = function(options, callback) {
 
     // search by location in the map
     if (options.locations) {
-        var loop    = options.locations.length;
-        var k       = 1;
+        // TODO Make work with multiple locations
         for (var i in options.locations) {
             var loc     = options.locations[i];
             this.artists({
                 artist_location: loc.name,
                 mood: loc.mood
             }, function (data) {
+                var loop    = data.length;
+                var k       = 1;
                 for (var j in data) {
                     that.songs({
                         artist_id: data[j].id,
