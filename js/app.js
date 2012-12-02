@@ -94,7 +94,7 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
                 name: location.country,
                 dance: 1,
                 frequency: 4,
-                mood: (weather.mood == 'sad') ? 1 : 4
+                mood: (weather.mood == 'sad') ? 1 : 3
             };
 
             var first = ($('.pin').length === 0);
@@ -107,6 +107,10 @@ App.prototype.newLocation = function(latitude, longitude, x, y) {
             pin.css('left', x - 21);
             pin.html(self.pinTemplate);
             pin.data('location', data);
+
+            pin.find('.pin-over-mood .pin-over-inner').addClass('opt-' + data.mood);
+            pin.find('.pin-over-frequency .pin-over-inner').addClass('opt-' + data.frequency);
+            pin.find('.pin-over-dance .pin-over-inner').addClass('opt-' + data.dance);
 
             $('#worldMap').append(pin);
         });
