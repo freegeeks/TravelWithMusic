@@ -26,10 +26,7 @@ Raphael('worldMap', 1000, 400, function () {
 			y = event.layerY,
 			latLon = world.getLatLon(x, y);
 
-		var search = new Search();
-		search.locationByGeo(latLon.lat, latLon.lon, function(location) {
-			console.log(location);
-		});
+		window.App.newLocation(latLon.lat, latLon.lon, x, y);
 	});
 	// world.animate({fill: "#666", stroke: "#666"}, 2000);
 	world.getXY = function (lat, lon) {

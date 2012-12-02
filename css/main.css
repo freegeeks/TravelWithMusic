@@ -155,8 +155,15 @@ nav ul li {float:left;}
 
 .orange-b {background:url(../img/pin-sprite.png) top left;}
 .orange-s {background:url(../img/pin-sprite.png) bottom left;} 
-.green-b {background:url(../img/pin-sprite.png) -65px 0;}
-.green-s {background:url(../img/pin-sprite.png) -65px 50px;}
+
+.pin-green {
+	position:absolute;
+	display:block;
+	height:45px;
+	width:40px;
+	z-index:1;
+	background:url(../img/pin-sprite.png) -65px 50px;
+}
 
 
 .pin {width:241px;height:241px;background:url(../img/pin-over.png) no-repeat;top:85px;left:350px;position:absolute;z-index:1;}

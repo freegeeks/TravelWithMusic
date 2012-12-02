@@ -1,6 +1,7 @@
 var themes = [];
 var App = function(models) {
     var self = this;
+    this.pinTemplate = $('.template-pin').html();
     
     if (typeof models === 'object') {
         this.models = models;
@@ -30,6 +31,9 @@ App.prototype.bindDomEvents = function() {
     var tracking = false;
     self = this;
 
+    // World
+
+    // Pin
     $(document).on('mouseover', '.pin-over', function(event) {
         $('.pin-over-big').removeClass('pin-over-big').addClass('pin-over');
 
@@ -71,6 +75,34 @@ App.prototype.theme = function (theme) {
         themes.push(theme);
     }
     console.log(themes);
+};
+
+App.prototype.newLocation = function(latitude, longitude, x, y) {
+    var self = this;
+    var search = new Search();
+    search.locationByGeo(latitude, longitude, function(location) {
+        search.weatherByLocation(location, function(weather) {
+            var data = {
+                name: location.country,
+                dance: 1,
+                frequency: 4,
+                mood: weather.mood
+            };
+
+            var first = $('.pin').length === 0;
+            var pin = $('<div />');
+            pin.addClass(first ? 'pin-green' : 'pin-orange');
+            pin.css('top', y - 45);
+            pin.css('left', x - 25);
+
+            var pinOver = $('<div />');
+            pinOver.addClass('pin');
+            pinOver.html(self.pinTemplate);
+
+            $('#worldMap').append(pin);
+            $('#worldMap').append(pinOver);
+        });
+    });
 };
 
 App.prototype.search = function(latitude, longitude, callback) {
@@ -149,8 +181,7 @@ if (typeof require !== 'undefined') {
         });
     });
 } else {
-    var pin = $(Config.pinTemplate);
-    $('.wrapper').append(pin);
-
-    window.App = new App();
+    $(document).ready(function() {
+        window.App = new App();
+    });
 }
