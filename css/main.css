@@ -284,13 +284,14 @@ nav ul li {float:left;}
     z-index: 1;
 }
 
-.pin-green {background: url("../img/pin-over-green.png") no-repeat scroll 0 0 transparent;}
+.pin.pin-green .pin-inner{background: url("../img/pin-over-green.png") no-repeat scroll 0 0 transparent;}
 
 
-
+.pin {background:url(../img/pin-sprite.png) -5px 36px;width:30px;height:30px;top:100px;left:350px;position:absolute;cursor:pointer;}
 .pin:hover .pin-inner{display:block;}
 
-.pin {background:url(../img/pin-sprite.png) -70px 36px;width:30px;height:30px;top:100px;left:350px;position:absolute;cursor:pointer;}
+.pin.pin-green {background:url(../img/pin-sprite.png) -70px 36px;}
+
 
 
 @media (max-width: 767px) {
