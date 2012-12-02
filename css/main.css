@@ -153,8 +153,19 @@ nav ul li a.active, nav a:hover {background:url(../img/thematic-icons-over.png) 
 #over {width:241px;height:241px;background:url(../img/pin-over.png) no-repeat;top:85px;left:350px;position:absolute;z-index:1;}
 
 #settings {border-radius: 50px;width:50px;height:50px;background:#FFF;margin:100px 0 0 43px;background:url(../img/settings-sprites.png) 1px -62px;float:left;}
+
+.pin-over-big {
+	height:105px;margin:100px 0 0 2px;background-image:url(../img/pin-over-pin.png);float:left;width:105px;
+}
+.pin-over-big .pin-over-weather {
+	margin: 17px;
+	background: url(../img/weather-sprites.png) no-repeat;
+	background-position: 8px 6px;
+	background-color: white;
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+
 #weather {border-radius: 50px;width:50px;height:50px;background:#FFF;margin:37px 0 0 5px;background:url(../img/weather-sprites.png) 1px -62px;float:left;}
 #dance {border-radius: 50px;width:50px;height:50px;background:#FFF;margin:100px 0 0 2px;background:url(../img/dance-sprites.png) 1px -62px;float:left;}
-
-
-#dance-big {height:95px;margin:100px 0 0 2px;background-image:url(../img/pin-over-pin.png);float:left;width:95px;}
