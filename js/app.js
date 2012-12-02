@@ -1,5 +1,12 @@
 var App = function(models) {
     this.models = models;
+
+    var listenPlay = function() {
+        console.log(models.player.track);
+    };
+
+    // Keep track of current song
+    this.models.player.addEventListener('change', listenPlay);
 };
 
 App.prototype.search = function(latitude, longitude, callback) {
