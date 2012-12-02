@@ -145,40 +145,30 @@ Search.prototype.weatherByLocation = function(location, callback) {
 };
 
 var search = new Search();
-search.load({
-    themes: [ 'xmas' ],
-    locations: [
-        {
-            name: 'netherlands',
-            dance: 0,
-            frequency: 1,
-            mood: 'happy'
-        },
-        {
-            name: 'brazil',
-            dance: 0,
-            frequency: 4,
-            mood: 'happy'
-        },
-        {
-            name: 'italy',
-            dance: 0,
-            frequency: 1,
-            mood: 'sad'
-        }
-    ]
-}, function(data) {
-    for (var i in data) {
-        if (data[i].tracks.length && data[i].tracks[0].foreign_id) {
-            console.debug(data[i].tracks[0].foreign_id + ' ' + data[i].artist_name + ' - ' + data[i].title);
-        }
-    }
-});
 
 search.locationByGeo(52.37, 4.89, function(location) {
-    console.log(location);
 
     search.weatherByLocation(location, function(weather) {
-        console.log(weather);
+        if (weather.text == 'Partly Cloudy') {
+            mood = 'sad';
+        }
+        search.load({
+            themes: [ ],
+            locations: [
+                {
+                    name: location.country,
+                    dance: 0,
+                    frequency: 10,
+                    mood: mood
+                }
+            ]
+        }, function(data) {
+            for (var i in data) {
+                if (data[i].tracks.length && data[i].tracks[0].foreign_id) {
+                    console.debug(data[i].tracks[0].foreign_id + ' ' + data[i].artist_name + ' - ' + data[i].title);
+                }
+            }
+        });
+
     });
 });
