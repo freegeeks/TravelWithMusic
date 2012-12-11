@@ -203,11 +203,14 @@ App.prototype.search = function(query, callback) {
     });
 };
 
-// current location, faking A'dam
-var latitude = 52.37,
-    longitude = 4.89,
-    y = latitude * -2.6938 + 227.066,
-    x = longitude * 2.6938 + 465.4;
+// main method triggered when all is loaded
+$(function () {
+    // current location, faking A'dam
+    var latitude = 52.37,
+        longitude = 4.89,
+        y = latitude * -2.6938 + 227.066,
+        x = longitude * 2.6938 + 465.4;
 
-window.App = new App();
-window.App.newLocation(latitude, longitude, x, y);
+    window.App = new App();
+    window.App.newLocation(latitude, longitude, x, y);
+});
