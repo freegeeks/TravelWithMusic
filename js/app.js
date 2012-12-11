@@ -1,4 +1,7 @@
-var App = function(models) {
+var App = function() {
+    var sp      = getSpotifyApi(1);
+    var models  = sp.require('sp://import/scripts/api/models');
+
     var self = this;
     this.pinTemplate = $('.pin-template').html();
     
@@ -19,7 +22,7 @@ var App = function(models) {
         };
 
         // Keep track of current song
-        this.models.player.addEventListener('change', listenPlay);
+        this.models.player.observe(models.EVENT.CHANGE, listenPlay);
     }
 
     // Dom events
@@ -200,18 +203,11 @@ App.prototype.search = function(query, callback) {
     });
 };
 
-if (typeof require !== 'undefined') {
-    require(['$api/models'], function(models) {
-        var latitude = 52.37,
-            longitude = 4.89,
-            y = latitude * -2.6938 + 227.066,
-            x = longitude * 2.6938 + 465.4;
+// current location, faking A'dam
+var latitude = 52.37,
+    longitude = 4.89,
+    y = latitude * -2.6938 + 227.066,
+    x = longitude * 2.6938 + 465.4;
 
-        window.App = new App(models);
-        window.App.newLocation(latitude, longitude, x, y);
-    });
-} else {
-    $(document).ready(function() {
-        window.App = new App();
-    });
-}
+window.App = new App();
+window.App.newLocation(latitude, longitude, x, y);

@@ -46,11 +46,11 @@ Search.prototype.photos = function (text, callback) {
 
 // Search by artists
 Search.prototype.artists = function (options, callback) {
-    var url = 'http://developer.echonest.com/api/v4/artist/search';
+    var url = ''; // http://developer.echonest.com/api/v4/artist/search';
 
     var data = new Object;
     data.api_key    = Config.echonest.apiKey;
-    data.results    = 50;
+    data.results    = 1;
     data.start      = 0;
 
     if (options.mood) {
@@ -72,12 +72,12 @@ Search.prototype.artists = function (options, callback) {
 
 // Search by songs
 Search.prototype.songs = function (options, callback) {
-    var url = 'http://developer.echonest.com/api/v4/song/search?bucket=tracks&bucket=id:spotify-WW';
+    var url = ''; // http://developer.echonest.com/api/v4/song/search?bucket=tracks&bucket=id:spotify-WW';
 
     var data = new Object;
     data.api_key    = Config.echonest.apiKey;
     data.format     = 'json';
-    data.results    = 3;
+    data.results    = 1;
     data.start      = 0;
     //data.sort       = 'duration-asc';
     //data.limit      = true;
@@ -225,7 +225,7 @@ search.locationByGeo(52.37, 4.89, function(location) {
                 {
                     name: location.country,
                     dance: 0,
-                    frequency: 4,
+                    frequency: 1,
                     mood: weather.mood
                 },
             ]

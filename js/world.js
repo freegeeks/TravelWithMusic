@@ -22,12 +22,28 @@ Raphael('worldMap', 1000, 400, function () {
 	var world = r.setFinish();
 	world.hover(over, out);
 	world.click(function(event) {
-		var x = event.layerX,
-			y = event.layerY,
+        var xy = world.XY(event); 
+		var x = xy.x,
+			y = xy.y,
 			latLon = world.getLatLon(x, y);
 
 		window.App.newLocation(latLon.lat, latLon.lon, x, y);
 	});
+    world.XY = function (evt) {
+      var el = evt.target,
+          x = y = 0;
+
+      while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+        x += el.offsetLeft - el.scrollLeft;
+        y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+      }
+
+      x = evt.clientX - x;
+      y = evt.clientY - y;
+
+      return { x: x, y: y };
+    }
 	// world.animate({fill: "#666", stroke: "#666"}, 2000);
 	world.getXY = function (lat, lon) {
 		return {

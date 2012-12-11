@@ -5,8 +5,10 @@
 	"BundleIdentifier": "r",
 	"BundleType": "Application",
 	"BundleVersion": "0.1",
-	"Dependencies": {
-		"api": "1.10.2",
-		"views": "1.18.1"
-	}
+    "RequiredPermissions": [
+        "http://developer.echonest.com",
+        "http://where.yahooapis.com",
+        "http://query.yahooapis.com",
+        "http://api.flickr.com"
+    ]
 }
